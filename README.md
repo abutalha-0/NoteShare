@@ -28,4 +28,4 @@ Then verify the project:
 
 **Before the first `migrate`:** define the intended custom user model with UUID IDs, or explicitly reconcile the existing authentication model. Django's default user model uses a different ID type than the proposed Fieldnotes schema. Switching user models after applying initial auth migrations is difficult, so database migrations intentionally begin in the next phase.
 
-The proposed data model is in the adjacent `fieldnotes-site/fieldnotes.dbml` file. Local secrets and the virtual environment are ignored by Git.
+The proposed data model is in [schema/fieldnotes.dbml](./schema/fieldnotes.dbml). It was transferred from the UI planning workspace and adapted for MySQL; [schema/README.md](./schema/README.md) records the differences. Local secrets and the virtual environment are ignored by Git.

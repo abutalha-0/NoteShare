@@ -1,0 +1,481 @@
+// MySQL 8 / Django ORM representation of the Fieldnotes data model.
+// Django UUIDField stores CHAR(32) on MySQL; DateTimeField uses DATETIME(6) in UTC.
+Project fieldnotes {
+  database_type: 'MySQL'
+}
+
+Enum account_status {
+  pending_verification
+  active
+  suspended
+}
+
+Enum account_role {
+  student
+  moderator
+  admin
+}
+
+Enum auth_token_purpose {
+  verify_email
+  reset_password
+}
+
+Enum note_status {
+  draft
+  pending_review
+  published
+  archived
+}
+
+Enum note_kind {
+  lecture_notes
+  exam_prep
+  problem_set
+  study_guide
+  other
+}
+
+Enum discussion_status {
+  open
+  closed
+}
+
+Enum notification_kind {
+  discussion_reply
+  note_comment
+  note_like
+  new_note
+  moderation_update
+}
+
+Enum report_reason {
+  inaccurate
+  copyright
+  spam
+  off_topic
+  harassment
+  privacy
+  other
+}
+
+Enum moderation_case_status {
+  open
+  reviewing
+  resolved
+}
+
+Enum moderation_action_kind {
+  begin_review
+  dismiss
+  hide_content
+  restore_content
+  suspend_account
+  reopen
+}
+
+Table users {
+  id char(32) [pk]
+  email varchar(320) [not null, unique]
+  status account_status [not null, default: 'pending_verification']
+  email_verified_at datetime(6)
+  created_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+}
+
+Table password_credentials {
+  user_id char(32) [pk, ref: > users.id]
+  password_hash text [not null]
+  password_changed_at datetime(6) [not null]
+}
+
+Table user_roles {
+  user_id char(32) [not null, ref: > users.id]
+  role account_role [not null]
+  granted_at datetime(6) [not null]
+
+  indexes {
+    (user_id, role) [pk]
+    role
+  }
+}
+
+Table auth_sessions {
+  id char(32) [pk]
+  user_id char(32) [not null, ref: > users.id]
+  refresh_token_hash char(64) [not null, unique]
+  created_at datetime(6) [not null]
+  last_used_at datetime(6)
+  expires_at datetime(6) [not null]
+  revoked_at datetime(6)
+
+  indexes {
+    (user_id, expires_at)
+  }
+}
+
+Table auth_action_tokens {
+  id char(32) [pk]
+  user_id char(32) [not null, ref: > users.id]
+  purpose auth_token_purpose [not null]
+  token_hash char(64) [not null, unique]
+  created_at datetime(6) [not null]
+  expires_at datetime(6) [not null]
+  consumed_at datetime(6)
+
+  indexes {
+    (user_id, purpose, expires_at)
+  }
+}
+
+Table universities {
+  id char(32) [pk]
+  code varchar(24) [not null, unique]
+  name varchar(200) [not null]
+  is_active boolean [not null, default: true]
+  created_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+}
+
+Table disciplines {
+  id char(32) [pk]
+  code varchar(24) [not null, unique]
+  name varchar(160) [not null]
+  is_active boolean [not null, default: true]
+}
+
+Table academic_departments {
+  id char(32) [pk]
+  university_id char(32) [not null, ref: > universities.id]
+  discipline_id char(32) [not null, ref: > disciplines.id]
+  code varchar(24) [not null]
+  name varchar(200) [not null]
+  is_active boolean [not null, default: true]
+  created_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+
+  indexes {
+    (university_id, code) [unique]
+    (university_id, name) [unique]
+    discipline_id
+  }
+}
+
+Table profiles {
+  user_id char(32) [pk, ref: - users.id]
+  display_name varchar(80)
+  bio varchar(500)
+  avatar_key varchar(512)
+  university_id char(32) [ref: > universities.id]
+  department_id char(32) [ref: > academic_departments.id]
+  show_avatar boolean [not null, default: true]
+  show_bio boolean [not null, default: true]
+  show_university boolean [not null, default: true]
+  show_department boolean [not null, default: true]
+  show_interests boolean [not null, default: true]
+  moderation_hidden_at datetime(6)
+  created_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+
+  indexes {
+    university_id
+    department_id
+  }
+}
+
+Table profile_interests {
+  id char(32) [pk]
+  user_id char(32) [not null, ref: > profiles.user_id]
+  label varchar(80) [not null]
+  label_normalized varchar(80) [not null]
+  position smallint [not null]
+
+  checks {
+    `position BETWEEN 1 AND 10` [name: 'profile_interest_position_1_to_10']
+  }
+
+  indexes {
+    (user_id, label_normalized) [unique]
+    (user_id, position) [unique]
+  }
+}
+
+Table subjects {
+  id char(32) [pk]
+  slug varchar(100) [not null, unique]
+  name varchar(160) [not null]
+  is_active boolean [not null, default: true]
+  created_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+}
+
+Table courses {
+  id char(32) [pk]
+  department_id char(32) [not null, ref: > academic_departments.id]
+  subject_id char(32) [not null, ref: > subjects.id]
+  code varchar(40) [not null]
+  name varchar(200) [not null]
+  is_active boolean [not null, default: true]
+  created_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+
+  indexes {
+    (department_id, code) [unique]
+    subject_id
+  }
+}
+
+Table notes {
+  id char(32) [pk]
+  publisher_id char(32) [not null, ref: > users.id]
+  department_id char(32) [not null, ref: > academic_departments.id]
+  subject_id char(32) [not null, ref: > subjects.id]
+  course_id char(32) [ref: > courses.id]
+  kind note_kind
+  title varchar(180) [not null]
+  short_description varchar(280) [not null]
+  detail_description text
+  status note_status [not null, default: 'draft']
+  moderation_hidden_at datetime(6)
+  published_at datetime(6)
+  created_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+  deleted_at datetime(6)
+
+  indexes {
+    (status, published_at)
+    (publisher_id, status, published_at)
+    (department_id, subject_id, status)
+    course_id
+  }
+}
+
+Table note_pdf_assets {
+  note_id char(32) [pk, ref: - notes.id]
+  storage_key varchar(512) [not null, unique]
+  original_filename varchar(255) [not null]
+  byte_size bigint [not null]
+  sha256 char(64) [not null]
+  page_count int
+  uploaded_at datetime(6) [not null]
+}
+
+Table note_resources {
+  id char(32) [pk]
+  note_id char(32) [not null, ref: > notes.id]
+  position smallint [not null]
+  label varchar(160) [not null]
+  url varchar(2048) [not null]
+  created_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+
+  checks {
+    `position BETWEEN 1 AND 5` [name: 'note_resource_position_1_to_5']
+  }
+
+  indexes {
+    (note_id, position) [unique]
+  }
+}
+
+Table note_likes {
+  user_id char(32) [not null, ref: > users.id]
+  note_id char(32) [not null, ref: > notes.id]
+  created_at datetime(6) [not null]
+
+  indexes {
+    (user_id, note_id) [pk]
+    note_id
+  }
+}
+
+Table saved_notes {
+  user_id char(32) [not null, ref: > users.id]
+  note_id char(32) [not null, ref: > notes.id]
+  created_at datetime(6) [not null]
+
+  indexes {
+    (user_id, note_id) [pk]
+    (user_id, created_at)
+  }
+}
+
+Table note_comments {
+  id char(32) [pk]
+  note_id char(32) [not null, ref: > notes.id]
+  author_id char(32) [not null, ref: > users.id]
+  parent_comment_id char(32) [ref: > note_comments.id]
+  body text [not null]
+  created_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+  deleted_at datetime(6)
+  moderation_hidden_at datetime(6)
+
+  indexes {
+    (note_id, created_at)
+    (author_id, created_at)
+    parent_comment_id
+  }
+}
+
+Table discussion_topics {
+  id char(32) [pk]
+  author_id char(32) [not null, ref: > users.id]
+  title varchar(140) [not null]
+  description text
+  status discussion_status [not null, default: 'open']
+  created_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+  closed_at datetime(6)
+  deleted_at datetime(6)
+  moderation_hidden_at datetime(6)
+
+  indexes {
+    (status, created_at)
+    (author_id, created_at)
+  }
+}
+
+Table discussion_replies {
+  id char(32) [pk]
+  topic_id char(32) [not null, ref: > discussion_topics.id]
+  author_id char(32) [not null, ref: > users.id]
+  parent_reply_id char(32) [ref: > discussion_replies.id]
+  body text [not null]
+  created_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+  deleted_at datetime(6)
+  moderation_hidden_at datetime(6)
+
+  indexes {
+    (topic_id, created_at)
+    (author_id, created_at)
+    parent_reply_id
+  }
+}
+
+Table moderation_cases {
+  id char(32) [pk]
+  note_id char(32) [ref: > notes.id]
+  note_comment_id char(32) [ref: > note_comments.id]
+  discussion_topic_id char(32) [ref: > discussion_topics.id]
+  discussion_reply_id char(32) [ref: > discussion_replies.id]
+  profile_user_id char(32) [ref: > profiles.user_id]
+  status moderation_case_status [not null, default: 'open']
+  opened_at datetime(6) [not null]
+  updated_at datetime(6) [not null]
+  resolved_at datetime(6)
+
+  checks {
+    `((note_id IS NOT NULL) + (note_comment_id IS NOT NULL) + (discussion_topic_id IS NOT NULL) + (discussion_reply_id IS NOT NULL) + (profile_user_id IS NOT NULL)) = 1` [name: 'moderation_case_one_target']
+  }
+
+  indexes {
+    (status, opened_at)
+    note_id
+    note_comment_id
+    discussion_topic_id
+    discussion_reply_id
+    profile_user_id
+  }
+}
+
+Table reports {
+  id char(32) [pk]
+  case_id char(32) [not null, ref: > moderation_cases.id]
+  reporter_id char(32) [not null, ref: > users.id]
+  reason report_reason [not null]
+  details text
+  created_at datetime(6) [not null]
+
+  indexes {
+    (case_id, reporter_id) [unique]
+    (reporter_id, created_at)
+  }
+}
+
+Table moderation_actions {
+  id char(32) [pk]
+  case_id char(32) [not null, ref: > moderation_cases.id]
+  moderator_id char(32) [not null, ref: > users.id]
+  affected_user_id char(32) [ref: > users.id]
+  kind moderation_action_kind [not null]
+  explanation text [not null]
+  created_at datetime(6) [not null]
+
+  indexes {
+    (case_id, created_at)
+    (moderator_id, created_at)
+  }
+}
+
+Table notifications {
+  id char(32) [pk]
+  recipient_id char(32) [not null, ref: > users.id]
+  actor_id char(32) [ref: > users.id]
+  kind notification_kind [not null]
+  note_id char(32) [ref: > notes.id]
+  note_comment_id char(32) [ref: > note_comments.id]
+  discussion_topic_id char(32) [ref: > discussion_topics.id]
+  discussion_reply_id char(32) [ref: > discussion_replies.id]
+  moderation_case_id char(32) [ref: > moderation_cases.id]
+  message varchar(240) [not null]
+  created_at datetime(6) [not null]
+  read_at datetime(6)
+
+  checks {
+    `((note_id IS NOT NULL) + (note_comment_id IS NOT NULL) + (discussion_topic_id IS NOT NULL) + (discussion_reply_id IS NOT NULL) + (moderation_case_id IS NOT NULL)) = 1` [name: 'notification_one_target']
+  }
+
+  indexes {
+    (recipient_id, read_at, created_at)
+    (recipient_id, created_at)
+  }
+}
+
+// Each table has one primary owner in this diagram. See SCHEMA_PAGE_MAP.md
+// for pages that also read tables owned by other groups.
+TableGroup Authentication {
+  users
+  password_credentials
+  user_roles
+  auth_sessions
+  auth_action_tokens
+}
+
+TableGroup Academic_directory {
+  universities
+  disciplines
+  academic_departments
+  subjects
+  courses
+}
+
+TableGroup Profiles {
+  profiles
+  profile_interests
+}
+
+TableGroup Notes {
+  notes
+  note_pdf_assets
+  note_resources
+  note_likes
+  saved_notes
+  note_comments
+}
+
+TableGroup Discussions {
+  discussion_topics
+  discussion_replies
+}
+
+TableGroup Notifications {
+  notifications
+}
+
+TableGroup Moderation {
+  moderation_cases
+  reports
+  moderation_actions
+}
