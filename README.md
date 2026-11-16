@@ -1,6 +1,6 @@
 # Fieldnotes backend
 
-Django API backend using MySQL through Oracle's Connector/Python backend. The accounts app contains the custom UUID user model and JWT authentication API. The remaining product apps will be added in later phases.
+Django API backend using MySQL through Oracle's Connector/Python backend. The accounts app contains the custom UUID user model and JWT authentication API. The academics app provides the shared academic directory for profiles and notes. The remaining product apps will be added in later phases.
 
 ## Local setup
 
@@ -28,12 +28,12 @@ Then verify the project:
 .venv/bin/python manage.py runserver
 ```
 
-The auth API is documented in [accounts/API.md](./accounts/API.md). Configure `JWT_SIGNING_KEY` to a long random value in production; if omitted, Django's secret key is used. Configure the `EMAIL_*` settings for outgoing verification and reset messages. In local debug mode, email defaults to the console.
+The APIs are documented in [accounts/API.md](./accounts/API.md) and [academics/API.md](./academics/API.md). Configure `JWT_SIGNING_KEY` to a long random value in production; if omitted, Django's secret key is used. Configure the `EMAIL_*` settings for outgoing verification and reset messages. In local debug mode, email defaults to the console.
 
-Run the account test suite without a MySQL server:
+Run the API test suites without a MySQL server:
 
 ```bash
-.venv/bin/python manage.py test accounts --settings=config.test_settings
+.venv/bin/python manage.py test accounts academics --settings=config.test_settings
 ```
 
 The proposed data model is in [schema/fieldnotes.dbml](./schema/fieldnotes.dbml). It was transferred from the UI planning workspace and adapted for MySQL; [schema/README.md](./schema/README.md) records the differences. Local secrets and the virtual environment are ignored by Git.
