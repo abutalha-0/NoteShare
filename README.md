@@ -1,6 +1,6 @@
 # Fieldnotes backend
 
-Initial Django project scaffold. It uses the Django ORM with MySQL through Oracle's Connector/Python backend. No product apps or migrations have been added yet.
+Django API backend using MySQL through Oracle's Connector/Python backend. The accounts app contains the custom UUID user model and JWT authentication API. The remaining product apps will be added in later phases.
 
 ## Local setup
 
@@ -24,8 +24,16 @@ Then verify the project:
 
 ```bash
 .venv/bin/python manage.py check
+.venv/bin/python manage.py migrate
+.venv/bin/python manage.py runserver
 ```
 
-**Before the first `migrate`:** define the intended custom user model with UUID IDs, or explicitly reconcile the existing authentication model. Django's default user model uses a different ID type than the proposed Fieldnotes schema. Switching user models after applying initial auth migrations is difficult, so database migrations intentionally begin in the next phase.
+The auth API is documented in [accounts/API.md](./accounts/API.md). Configure `JWT_SIGNING_KEY` to a long random value in production; if omitted, Django's secret key is used. Configure the `EMAIL_*` settings for outgoing verification and reset messages. In local debug mode, email defaults to the console.
+
+Run the account test suite without a MySQL server:
+
+```bash
+.venv/bin/python manage.py test accounts --settings=config.test_settings
+```
 
 The proposed data model is in [schema/fieldnotes.dbml](./schema/fieldnotes.dbml). It was transferred from the UI planning workspace and adapted for MySQL; [schema/README.md](./schema/README.md) records the differences. Local secrets and the virtual environment are ignored by Git.
