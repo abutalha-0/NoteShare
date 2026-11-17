@@ -1,6 +1,6 @@
 # Fieldnotes backend
 
-Django API backend using MySQL through Oracle's Connector/Python backend. Accounts provides the custom UUID user model and JWT authentication. Academics provides the shared directory. Profiles provides editable owner profiles, public privacy controls, interests, and avatar storage. The remaining product apps will be added in later phases.
+Django API backend using MySQL through Oracle's Connector/Python backend. Accounts provides the custom UUID user model and JWT authentication. Academics provides the shared directory. Profiles provides editable owner profiles, public privacy controls, interests, and avatar storage. Notes provides publishing, PDFs, resources, explore, likes, saves, and note discussion. The remaining product apps will be added in later phases.
 
 ## Local setup
 
@@ -28,12 +28,12 @@ Then verify the project:
 .venv/bin/python manage.py runserver
 ```
 
-The APIs are documented in [accounts/API.md](./accounts/API.md), [academics/API.md](./academics/API.md), and [profiles/API.md](./profiles/API.md). Configure `JWT_SIGNING_KEY` to a long random value in production; if omitted, Django's secret key is used. Configure the `EMAIL_*` settings for outgoing verification and reset messages. In local debug mode, email defaults to the console. Profile avatars use `MEDIA_ROOT` for local development.
+The APIs are documented in [accounts/API.md](./accounts/API.md), [academics/API.md](./academics/API.md), [profiles/API.md](./profiles/API.md), and [notes/API.md](./notes/API.md). Configure `JWT_SIGNING_KEY` to a long random value in production; if omitted, Django's secret key is used. Configure the `EMAIL_*` settings for outgoing verification and reset messages. In local debug mode, email defaults to the console. Profile avatars and note PDFs use `MEDIA_ROOT` for local development; configure durable private storage for production.
 
 Run the API test suites without a MySQL server:
 
 ```bash
-.venv/bin/python manage.py test accounts academics profiles --settings=config.test_settings
+.venv/bin/python manage.py test accounts academics profiles notes --settings=config.test_settings
 ```
 
 The proposed data model is in [schema/fieldnotes.dbml](./schema/fieldnotes.dbml). It was transferred from the UI planning workspace and adapted for MySQL; [schema/README.md](./schema/README.md) records the differences. Local secrets and the virtual environment are ignored by Git.
