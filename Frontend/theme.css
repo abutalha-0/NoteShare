@@ -1,0 +1,229 @@
+/* Theme control uses the same squared hardware as the masthead. */
+.theme-toggle{display:grid;place-items:center;width:35px;height:35px;padding:5px;border:1px solid #9fb4b5;background:#405563;color:#fffefa}
+.theme-toggle:hover,.theme-toggle:focus-visible{background:#567080}
+.theme-toggle svg{width:21px;height:21px;stroke-width:1.8}
+.theme-icon--sun{display:none}
+[data-theme="dark"] .theme-icon--moon{display:none}
+[data-theme="dark"] .theme-icon--sun{display:block}
+@media(max-width:640px){.theme-toggle{width:32px;height:32px}.theme-toggle svg{width:19px;height:19px}}
+@media(max-width:380px){.theme-toggle{width:30px;height:30px}.top-actions{gap:5px}.upload-trigger{padding:8px}}
+
+/* Charcoal paper with burnt orange, ochre, coral, and small cool accents. */
+:root[data-theme="dark"]{
+  --wall:#282d2c;
+  --paper:#302d28;
+  --white:#3d3932;
+  --ink:#c8cbbd;
+  --muted:#b7b4aa;
+  --line:#6d6557;
+  --orange:#c98b53;
+  --yellow:#d4b46e;
+  --red:#e3a186;
+  --mint:#3e5750;
+  --accent-ink:#202a28;
+  --card:#39352f;
+  --hover:#493d32;
+}
+[data-theme="dark"] body{background:var(--wall)}
+[data-theme="dark"] .masthead{background:#202e32;color:var(--ink);border-bottom:1px solid #756851}
+[data-theme="dark"] .masthead-center{color:#c5cec2}
+[data-theme="dark"] .sidebar{background:#37342f}
+[data-theme="dark"] .sidebar-bottom{border-color:var(--line)}
+[data-theme="dark"] .nav-item:hover{background:var(--hover)}
+[data-theme="dark"] .nav-item.is-active,
+[data-theme="dark"] .nav-item.is-active:hover,
+[data-theme="dark"] .nav-item.is-active:focus-visible{background:var(--orange);color:var(--accent-ink)}
+[data-theme="dark"] .nav-item em{color:var(--accent-ink)}
+[data-theme="dark"] .paper-stage{background-image:radial-gradient(rgba(210,171,108,.22) .6px,transparent .6px)}
+[data-theme="dark"] body.discussions-view .paper-stage{background-image:none}
+[data-theme="dark"] .paper-window,
+[data-theme="dark"] .note-reader,
+[data-theme="dark"] .notification-board{box-shadow:4px 4px 0 #10191a}
+[data-theme="dark"] .window-bar,
+[data-theme="dark"] .reader-bar{background:var(--yellow);color:var(--accent-ink);border-color:#76583c}
+[data-theme="dark"] .reader-bar button{color:var(--accent-ink)}
+[data-theme="dark"] .searchbar,
+[data-theme="dark"] .forum-search,
+[data-theme="dark"] .filter-toggle{border-color:#887864}
+[data-theme="dark"] body.explore-only .search-only .searchbar{border-color:#887864}
+[data-theme="dark"] .searchbar:focus-within,
+[data-theme="dark"] .forum-search:focus-within{border-color:var(--orange)}
+[data-theme="dark"] .searchbar input::placeholder,
+[data-theme="dark"] .forum-search input::placeholder,
+[data-theme="dark"] .discussion-compose textarea::placeholder,
+[data-theme="dark"] .forum-reply-composer textarea::placeholder{color:#bdb7aa;opacity:1}
+
+/* Give reading text a consistent middle tone; keep headings bright. */
+[data-theme="dark"] .page-intro,
+[data-theme="dark"] .note-desc,
+[data-theme="dark"] .discussion-desc,
+[data-theme="dark"] .detail-summary,
+[data-theme="dark"] .reader-info p,
+[data-theme="dark"] .reader-detail p,
+[data-theme="dark"] .forum-head p,
+[data-theme="dark"] .account-identity p,
+[data-theme="dark"] .notification-header p{color:#c4c2b4}
+[data-theme="dark"] .note-byline,
+[data-theme="dark"] .account-about p,
+[data-theme="dark"] .preview-sheet p,
+[data-theme="dark"] .preview-sheet li,
+[data-theme="dark"] .discussion-post p,
+[data-theme="dark"] .forum-response p{color:#c2c3b7}
+[data-theme="dark"] .note-meta span,
+[data-theme="dark"] .note-byline span{color:#aaa99d}
+[data-theme="dark"] .sidebar-caption,
+[data-theme="dark"] .reader-side-label,
+[data-theme="dark"] .reader-side-head span,
+[data-theme="dark"] .reader-folio,
+[data-theme="dark"] .reader-detail>span,
+[data-theme="dark"] .reader-meta>span,
+[data-theme="dark"] .forum-topic-author,
+[data-theme="dark"] .forum-topic-aside small,
+[data-theme="dark"] .notification-group-heading span,
+[data-theme="dark"] .notification-copy small,
+[data-theme="dark"] .notification-time,
+[data-theme="dark"] .account-activity-copy small{font-size:11px;letter-spacing:.02em}
+[data-theme="dark"] .sidebar-bottom p{font-size:10px}
+[data-theme="dark"] .notification-copy>span{overflow:visible;text-overflow:clip;white-space:normal}
+[data-theme="dark"] .account-route-index{color:var(--accent-ink)}
+[data-theme="dark"] .action-button.secondary:hover,
+[data-theme="dark"] .publisher-note-row:hover,
+[data-theme="dark"] .publisher-note-row:focus-visible,
+[data-theme="dark"] .forum-topic:hover,
+[data-theme="dark"] .forum-topic:focus-visible,
+[data-theme="dark"] .forum-compose-trigger:hover,
+[data-theme="dark"] .account-routes button:hover,
+[data-theme="dark"] .account-routes button:focus-visible,
+[data-theme="dark"] .account-activity-row:hover,
+[data-theme="dark"] .account-activity-row:focus-visible,
+[data-theme="dark"] .notification-row:hover,
+[data-theme="dark"] .notification-row:focus-visible{background:var(--hover)}
+
+/* Preserve the three alternating note-slip treatments from the light canvas. */
+[data-theme="dark"] .note-tile{
+  --tile-accent:#b78353;
+  --tile-spine:#49382b;
+  --tile-rivet:#664c37;
+  --tile-outline:#80684f;
+  --tile-tag:#4b3c30;
+  background:#3e332c;
+  border-color:var(--tile-outline);
+  box-shadow:none;
+}
+[data-theme="dark"] .note-tile--1{
+  --tile-accent:#8cab96;
+  --tile-spine:#2d433a;
+  --tile-rivet:#3c594c;
+  --tile-outline:#607d6b;
+  --tile-tag:#364a40;
+  background:#303d37;
+}
+[data-theme="dark"] .note-tile--2{
+  --tile-accent:#bc8472;
+  --tile-spine:#32434e;
+  --tile-rivet:#475e67;
+  --tile-outline:#627b83;
+  --tile-tag:#374a53;
+  background:#303c43;
+}
+[data-theme="dark"] .note-tile:hover,
+[data-theme="dark"] .note-tile:focus-visible{border-color:var(--tile-accent);box-shadow:3px 3px 0 #111a19}
+[data-theme="dark"] .note-tile__spine{background:var(--tile-spine);border-color:var(--tile-outline)}
+[data-theme="dark"] .note-tile__spine i{background:var(--tile-rivet);border-color:var(--tile-accent)}
+[data-theme="dark"] .note-tile__body{top:14px;bottom:9px}
+[data-theme="dark"] .note-tile__body h2{font-size:17px;font-weight:500;line-height:1.08;letter-spacing:-.018em}
+[data-theme="dark"] .note-tile__body p{margin-top:4px;color:#c2c3b7;font-size:11.5px;line-height:1.22;-webkit-line-clamp:3}
+[data-theme="dark"] .note-tag{background:var(--tile-tag,var(--white));border-color:var(--tile-outline,var(--line));color:#d1d0be;font-size:10px}
+[data-theme="dark"] .note-tag::after{background:#eeeae0;color:#1c292d}
+
+/* Discussion groups retain their identities without tinting whole screens. */
+[data-theme="dark"] .forum-search button{background:#544a3b}
+[data-theme="dark"] .forum-list-head{border-top-color:#a1875e}
+[data-theme="dark"] .forum-topic{border-bottom-color:#74695a}
+[data-theme="dark"] .forum-topic-index{color:var(--accent-ink);border-color:#65776b}
+[data-theme="dark"] .forum-topic-index::after{border-color:#65776b}
+[data-theme="dark"] .forum-thread-head{background:#504638;border-left-color:var(--yellow)}
+[data-theme="dark"] .forum-thread-head::after{border-top-color:#504638}
+[data-theme="dark"] .forum-thread-code,
+[data-theme="dark"] .forum-thread-question,
+[data-theme="dark"] .forum-thread-author{color:var(--ink)}
+[data-theme="dark"] .forum-thread-code span{color:var(--yellow)}
+[data-theme="dark"] .forum-thread-author{border-top-color:#8b775b}
+[data-theme="dark"] .forum-response-group{--group-accent:#d88970;--group-surface:#44352f}
+[data-theme="dark"] .forum-response-group:nth-of-type(4n+2){--group-accent:#9cb9a6;--group-surface:#34463d}
+[data-theme="dark"] .forum-response-group:nth-of-type(4n+3){--group-accent:#9fb8c4;--group-surface:#34424a}
+[data-theme="dark"] .forum-response-group:nth-of-type(4n+4){--group-accent:var(--yellow);--group-surface:#49402e}
+[data-theme="dark"] .forum-response-to strong,
+[data-theme="dark"] .forum-response-group .forum-inline-reply{color:#e6a88f}
+[data-theme="dark"] .forum-reply-target{background:#50483a}
+[data-theme="dark"] .forum-response-heading,
+[data-theme="dark"] .forum-reply-composer,
+[data-theme="dark"] .forum-new-form{border-color:#68766b}
+
+/* Reader information and PDF viewer belong to the same desk. PDF pages retain their own color. */
+[data-theme="dark"] .reader-info{background:var(--paper)}
+[data-theme="dark"] .note-reader{border-color:#897a62}
+[data-theme="dark"] .reader-extra,
+[data-theme="dark"] .reader-side,
+[data-theme="dark"] .reader-side-block--publisher,
+[data-theme="dark"] .reader-side-actions,
+[data-theme="dark"] .reader-document-bar{border-color:#5e6b60}
+[data-theme="dark"] .reader-side{background:#3e3932}
+[data-theme="dark"] .reader-document-bar{background:#3d423d}
+[data-theme="dark"] .reader-pdf{padding:12px;background:#333b3d}
+[data-theme="dark"] .reader-pdf iframe{border:1px solid #6b786c;background:#fbf8f0;color-scheme:light}
+[data-theme="dark"] .reader-like:hover,
+[data-theme="dark"] .reader-like.is-liked{background:#684439}
+[data-theme="dark"] .publisher-avatar i{color:var(--accent-ink)}
+[data-theme="dark"] .note-reader::backdrop,
+[data-theme="dark"] .modal-backdrop{background:#0b1312df}
+
+/* Colored markers stay legible against their individual surfaces. */
+[data-theme="dark"] .notification-mark[data-kind="comment"]{background:var(--yellow);color:var(--accent-ink)}
+[data-theme="dark"] .notification-mark[data-kind="like"]{background:#cc9078;color:var(--accent-ink)}
+[data-theme="dark"] .notification-mark[data-kind="note"],
+[data-theme="dark"] .account-activity-mark[data-kind="reply"]{background:#93b4bf;color:var(--accent-ink)}
+[data-theme="dark"] .account-activity-mark{color:var(--accent-ink)}
+[data-theme="dark"] .account-activity-mark[data-kind="discussion"]{color:var(--ink)}
+
+/* Warm controls and title bars carry the strongest color. */
+[data-theme="dark"] .upload-trigger,
+[data-theme="dark"] .action-button:not(.secondary),
+[data-theme="dark"] .filter-toggle:hover,
+[data-theme="dark"] .filter-toggle[aria-expanded="true"],
+[data-theme="dark"] .bookmark-button:hover,
+[data-theme="dark"] .bookmark-button.is-saved,
+[data-theme="dark"] .vote-control:hover,
+[data-theme="dark"] .vote-control.is-voted,
+[data-theme="dark"] .reader-save,
+[data-theme="dark"] .reader-document-actions .reader-download,
+[data-theme="dark"] .discussion-compose-bottom button,
+[data-theme="dark"] .forum-start,
+[data-theme="dark"] .forum-search button:hover,
+[data-theme="dark"] .forum-thread-author .forum-inline-reply,
+[data-theme="dark"] .forum-compose-send,
+[data-theme="dark"] .publisher-avatar,
+[data-theme="dark"] .forum-author-mark,
+[data-theme="dark"] .forum-compose-mark,
+[data-theme="dark"] .account-monogram{color:var(--accent-ink)}
+[data-theme="dark"] .upload-trigger:hover,
+[data-theme="dark"] .action-button:not(.secondary):hover,
+[data-theme="dark"] .reader-save:hover,
+[data-theme="dark"] .reader-document-actions .reader-download:hover,
+[data-theme="dark"] .discussion-compose-bottom button:hover,
+[data-theme="dark"] .forum-start:hover,
+[data-theme="dark"] .forum-compose-send:hover{background:#d8a367}
+[data-theme="dark"] .toast{background:#c8cbbd;color:#202a28}
+[data-theme="dark"] .avatar,
+[data-theme="dark"] .top-notifications,
+[data-theme="dark"] .theme-toggle{background:#435b59;color:#e3e6da;border-color:#87958b}
+[data-theme="dark"] .avatar:hover,
+[data-theme="dark"] .top-notifications:hover,
+[data-theme="dark"] .top-notifications.is-active,
+[data-theme="dark"] .theme-toggle:hover{background:#58706a}
+
+@media(max-width:640px){
+  [data-theme="dark"] .paper-window,
+  [data-theme="dark"] .notification-board{box-shadow:2px 2px 0 #10191a}
+  [data-theme="dark"] .reader-pdf{padding:6px}
+}

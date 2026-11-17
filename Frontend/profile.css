@@ -1,0 +1,85 @@
+/* Profiles share one reading order. Editing controls appear only for the owner. */
+.account-profile{max-width:920px;margin:0 auto;padding-bottom:56px}
+.account-hero{padding:4px 0 32px}
+.profile-topline{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:32px}
+.profile-hero-actions{display:flex;align-items:center;gap:20px}
+.profile-private-label,.profile-readonly-label{display:inline-block;color:var(--muted);font:500 9px var(--mono);letter-spacing:.045em;vertical-align:2px}
+.profile-private-label{margin-left:11px}
+.profile-readonly-label{border:1px solid var(--line);padding:6px 7px}
+.profile-edit-toggle,.profile-back{border:0;border-bottom:1px solid currentColor;background:transparent;color:var(--red);padding:4px 0;font:600 12px var(--sans);white-space:nowrap}
+.profile-edit-toggle:hover,.profile-back:hover{color:var(--ink)}
+#profileEditToggle{min-height:39px;padding:9px 13px;border:1px solid var(--ink);background:var(--orange);color:var(--ink);font-weight:700}
+#profileEditToggle:hover,#profileEditToggle:focus-visible{background:#ffd099;color:var(--ink)}
+#profileEditToggle[aria-expanded="true"]{background:var(--paper)}
+.profile-back{margin:0 0 28px}
+.account-identity{margin-top:23px;align-items:flex-end}
+.account-monogram{overflow:visible;color:var(--ink)}
+.account-monogram img{display:block;width:100%;height:100%;object-fit:cover}
+.account-monogram:has(img){background:var(--paper)}
+.account-monogram>span{z-index:1}
+.account-identity h1{overflow-wrap:anywhere}
+.account-identity p{max-width:680px;line-height:1.5}
+.account-tabs{gap:30px;overflow-x:auto;scrollbar-width:thin}
+.account-tabs button{flex:none}
+.profile-counts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--ink)}
+.profile-counts>div{display:grid;gap:4px;align-content:center;min-height:103px;padding:20px 24px 19px 0}
+.profile-counts>div+div{border-left:1px solid var(--line);padding-left:28px}
+.profile-counts strong{font:700 37px/.95 var(--serif);letter-spacing:-.055em}
+.profile-counts span{color:var(--muted);font:500 10px var(--mono);text-transform:uppercase;letter-spacing:.02em}
+.account-details{gap:50px;padding-top:36px}
+.account-about p{max-width:360px}
+.account-studies dl>div{grid-template-columns:100px minmax(0,1fr)}
+.account-space{padding-top:30px}
+.account-space h2{display:flex;align-items:baseline;gap:6px}
+.account-space .profile-private-label{font-size:9px}
+.profile-collection{padding-top:31px}
+.profile-collection-head{display:flex;align-items:baseline;justify-content:space-between;gap:15px;padding-bottom:13px;border-bottom:1px solid var(--ink)}
+.profile-collection-head h2{margin:0;font:700 25px var(--serif);letter-spacing:-.035em}
+.profile-collection-head span{color:var(--muted);font:10px var(--mono);white-space:nowrap}
+.profile-collection-row{display:grid;grid-template-columns:33px minmax(0,1fr) 18px;align-items:start;gap:15px;width:100%;padding:19px 6px;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);text-align:left;transition:background .15s ease,padding-left .15s ease}
+.profile-collection-row:hover,.profile-collection-row:focus-visible{padding-left:12px;background:#eef1eb}
+.profile-collection-index{padding-top:2px;color:var(--red);font:11px var(--mono)}
+.profile-collection-copy{display:grid;gap:5px;min-width:0}
+.profile-collection-copy strong{font:700 19px/1.2 var(--serif);letter-spacing:-.03em}
+.profile-collection-copy small{max-width:680px;color:var(--muted);font:12px/1.4 var(--sans)}
+.profile-collection-arrow{color:var(--red);font:18px var(--sans)}
+.profile-collection-empty{padding:27px 5px;color:var(--muted);font:13px var(--sans)}
+.profile-author-link{padding:0;border:0;border-bottom:1px solid currentColor;background:transparent;color:inherit;font:inherit;font-weight:700;text-align:left}
+.profile-author-link:hover,.profile-author-link:focus-visible{color:var(--red)}
+.forum-thread-author .profile-author-link{font:700 12px var(--sans)}
+.forum-response-by .profile-author-link{font:700 13px var(--sans)}
+.profile-edit{border-top:3px solid var(--orange);padding-top:26px}
+.profile-edit-head h2{margin:0 0 5px;font:700 28px var(--serif);letter-spacing:-.04em}
+.profile-edit-head p{margin:0;color:var(--muted);font:12px var(--sans)}
+.profile-edit-grid{display:grid;grid-template-columns:180px minmax(0,1fr);gap:35px;margin-top:27px}
+.profile-edit-avatar{align-self:start;display:grid;justify-items:start;gap:11px}
+.profile-edit-avatar .account-monogram{width:96px;height:96px}
+.profile-edit-avatar label{display:grid;gap:3px;font:600 12px var(--sans)}
+.profile-edit-avatar label small{color:var(--muted);font:10px/1.4 var(--sans)}
+.profile-edit-avatar input{width:100%;max-width:180px;color:var(--muted);font:10px var(--sans)}
+.profile-edit-avatar input::file-selector-button{margin-right:8px;padding:6px 7px;border:1px solid var(--line);border-radius:0;background:var(--white);color:var(--ink);font:600 10px var(--sans);cursor:pointer}
+.profile-edit-avatar>button{padding:2px 0;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--red);font:600 11px var(--sans)}
+.profile-edit-fields{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px}
+.profile-edit-fields label{display:grid;align-content:start;gap:7px;min-width:0;color:var(--muted);font:500 10px var(--mono);text-transform:uppercase}
+.profile-edit-fields label:last-child{grid-column:1/-1}
+.profile-edit-fields input,.profile-edit-fields textarea{width:100%;min-width:0;padding:11px 12px;border:1px solid var(--line);border-radius:0;background:var(--white);color:var(--ink);font:13px/1.45 var(--sans);text-transform:none}
+.profile-edit-fields textarea{min-height:110px;resize:vertical}
+.profile-edit-fields input:focus,.profile-edit-fields textarea:focus{border-color:var(--red)}
+.profile-edit-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
+.profile-edit-actions button{min-height:39px;padding:9px 15px;border:1px solid var(--ink);font:700 11px var(--sans)}
+.profile-edit-cancel{background:var(--paper);color:var(--ink)}
+.profile-edit-save{background:var(--orange);color:var(--ink)}
+.profile-edit-cancel:hover{background:var(--white)}
+.profile-edit-save:hover{background:#ffd099}
+[data-theme="dark"] .profile-collection-row:hover,[data-theme="dark"] .profile-collection-row:focus-visible{background:var(--hover)}
+[data-theme="dark"] .account-monogram{color:var(--accent-ink)}
+[data-theme="dark"] .account-route-index{color:var(--ink)}
+[data-theme="dark"] .profile-edit-save{color:var(--accent-ink)}
+[data-theme="dark"] .profile-edit-save:hover{background:#d8a367}
+[data-theme="dark"] #profileEditToggle{color:var(--accent-ink)}
+[data-theme="dark"] #profileEditToggle:hover,[data-theme="dark"] #profileEditToggle:focus-visible{background:#d8a367;color:var(--accent-ink)}
+[data-theme="dark"] #profileEditToggle[aria-expanded="true"]{background:var(--paper);color:var(--ink)}
+[data-theme="dark"] .profile-edit-avatar input::file-selector-button{border-color:var(--line)}
+@media(max-width:760px){.profile-edit-grid{grid-template-columns:1fr;gap:25px}.profile-edit-avatar{grid-template-columns:96px minmax(0,1fr);column-gap:18px;align-items:center}.profile-edit-avatar>span{grid-row:1/4}.profile-edit-avatar input{max-width:260px}}
+@media(max-width:640px){.profile-topline{align-items:flex-start}.profile-hero-actions{align-items:flex-end;flex-direction:column;gap:7px}.profile-private-label{display:block;margin:4px 0 0}.profile-counts>div{min-height:91px;padding:16px 9px 16px 0}.profile-counts>div+div{padding-left:12px}.profile-counts strong{font-size:29px}.profile-counts span{font-size:9px;line-height:1.3}.account-details{gap:0}.profile-collection-row{grid-template-columns:27px minmax(0,1fr) 15px;gap:8px}.profile-collection-copy strong{font-size:17px}.profile-collection-copy small{font-size:11px}.account-tabs{gap:21px}}
+@media(max-width:500px){.profile-edit-fields{grid-template-columns:1fr}.profile-edit-fields label:last-child{grid-column:auto}.profile-edit-avatar{grid-template-columns:74px minmax(0,1fr);column-gap:13px}.profile-edit-avatar .account-monogram{width:74px;height:74px}.profile-collection-head h2{font-size:21px}}
